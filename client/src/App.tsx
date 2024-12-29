@@ -1,10 +1,27 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
+import { useEffect } from 'react'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [data, setData] = useState("null")
+  const serverUrl = 'http://localhost:3000'; // Replace with your server's URL
+  useEffect(() => {
+    // const baseCurrency = 'EUR';
+    // const currencies = 'USD';
+
+    // fetch(`${serverUrl}/api/data?base_currency=${baseCurrency}&currencies=${currencies}`)
+    // .then(response => {
+    //   console.log('Response received:', response);
+    //   return response.json();
+    // })
+    // .then(data => {
+    //   console.log('Data parsed:', data);
+    //   setData(data);
+    // })
+    // .catch(error => console.error('Error fetching data:', error))
+  }, [data])
 
   return (
     <>
@@ -18,12 +35,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+          response is {data}
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
