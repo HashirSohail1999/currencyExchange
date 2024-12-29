@@ -7,7 +7,6 @@
     "dev": "ts-node-dev --respawn server.ts",
     "build": "tsc",
     "start": "node dist/server.js"
-
   },
   "keywords": [],
   "author": "",
@@ -19,5 +18,9 @@
     "express": "^4.21.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.7.2"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.9.36",
+    "axios": "^1.7.9"
   }
 }
