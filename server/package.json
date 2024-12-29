@@ -10,6 +10,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@everapi/freecurrencyapi-js": "^1.0.1",
+    "dotenv": "^16.4.7",
     "express": "^4.21.2"
   }
 }
