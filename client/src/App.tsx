@@ -24,7 +24,7 @@ const App: React.FC = () => {
   
   //USEEFFECT FOR FETCHING THE LIST OF CURRENCIES
   useEffect(() => {
-    const serverUrl = 'http://localhost:3000'; // Use environment variable or fallback to localhost
+    const serverUrl = NODEJS_SERVER_URL|| 'http://localhost:3000'; // Use environment variable or fallback to localhost
     fetch(`${serverUrl}/api/currencies`)
     .then(response => {
         console.log('Response received:', response);
