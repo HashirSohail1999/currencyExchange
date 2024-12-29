@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import loadingImage from '../public/loading.png';
 import './App.css'
 
 const NODEJS_SERVER_URL = import.meta.env.VITE_NODEJS_SERVER_URL;
@@ -95,8 +96,13 @@ const App: React.FC = () => {
             ))}
           </select>
         </div>
-        ) : (
-          <p>Loading...</p>
+        ) : (<>
+{/* Loading Image */}
+            <div className="flex justify-center items-center">
+            <img src={loadingImage} alt="Loading" width={50} height={50} className="animate-spin" />
+            </div>
+          <div>Loading currencies...</div>
+          </>
         )}
         <button
          className="m-5 p-2 bg-teal-500 bg-opacity-50 backdrop-filter backdrop-blur-lg h-max w-max rounded-xl flex-row text-center"
