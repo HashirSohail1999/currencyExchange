@@ -1,11 +1,14 @@
 {
-  "include": ["src/**/*", "api/**/*"],
-  "compilerOptions": {
-    "target": "ES6",
-    "module": "CommonJS",
-    "rootDir": "./",
-    "outDir": "./dist",
-    "strict": true,
-    "esModuleInterop": true
+    "compilerOptions": {
+      "target": "es6",
+      "module": "commonjs",
+      "outDir": "./dist",
+      "rootDir": "./",
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true
+    },
+    "include": ["./**/*"],
+    "exclude": ["node_modules"]
   }
-}
