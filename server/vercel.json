@@ -11,6 +11,9 @@
         "src": "/(.*)",
         "dest": "src/index.ts"
       }
-    ]
+    ],
+    "scripts": {
+    "build": "npm install && npm run build"
+  }
   }
   
