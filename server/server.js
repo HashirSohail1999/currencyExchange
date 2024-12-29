@@ -1,5 +1,8 @@
-require('dotenv').config();
-const express = require('express');
+import Freecurrencyapi from '@everapi/freecurrencyapi-js';
+import express from 'express';
+import dotenv from 'dotenv';
+
+dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -7,13 +10,15 @@ const port = process.env.PORT || 3000;
 const apiKey = process.env.FREECURRENCYAPI_KEY;
 const freecurrencyapi = new Freecurrencyapi(apiKey);
 app.get('/', (req, res) => {
-    freecurrencyapi.latest({
-        base_currency: 'USD',
-        currencies: 'EUR'
-    }).then(response => {
-        console.log(response);
-        res.send(response+' Hello World!');
-    });
+
+    // freecurrencyapi.latest({
+    //     base_currency: 'EUR',
+    //     currencies: 'USD'
+    // }).then(response => {
+    //     console.log(response);
+    //     res.send(`<pre>${JSON.stringify(response, null, 2)}</pre> `);
+    // });
+    res.send(`hello world`)
 });
 
 app.listen(port, () => {
