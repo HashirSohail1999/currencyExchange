@@ -14,30 +14,30 @@ app.use(express.json());
 // Access your API keys using process.env
 const apiKey = process.env.FREECURRENCYAPI_KEY;
 const freecurrencyapi = new Freecurrencyapi(apiKey);
-app.get('/', (req, res) => {
 
-    // freecurrencyapi.latest({
-    //     base_currency: 'EUR',
-    //     currencies: 'USD'
-    // }).then(response => {
-    //     console.log(response);
-    //     res.send(`<pre>${JSON.stringify(response, null, 2)}</pre> `);
-    // });
-    //  freecurrencyapi.currencies().then(response => {
-    //     console.log(response);
-    //     res.send(`<pre>${JSON.stringify(response, null, 2)}</pre> `);
-    // });
+//Homepage nothing to see here
+app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
+app.get('/api/currencies', (req, res) => {
+    console.log(`request recieved for currency list`)
+     freecurrencyapi.currencies().then(response => {
+        res.send(response);
+    });
+});
+
 app.get('/api/data', (req, res) => {
-    const { base_currency, currencies } = req.query;
-    console.log("request recieved = "+`${base_currency+" "+ currencies}`);
-      // Send a JSON response with the request parameters
-  res.json({
-    base_currency: base_currency,
-    currencies: currencies
-  });
+    const { base_currency, target_currency } = req.query;
+    //clg that the request is recieved
+    console.log("request recieved = "+`${base_currency+" "+ target_currency}`);
+      freecurrencyapi.latest({
+            base_currency: `${base_currency}`,
+            currencies: `${target_currency}`
+        }).then(response => {
+            console.log(response);
+            res.send(response);
+        });
   });
 
 app.listen(port, () => {
