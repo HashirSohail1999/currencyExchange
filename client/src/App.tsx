@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css'
 
+const NODEJS_SERVER_URL = import.meta.env.VITE_NODEJS_SERVER_URL;
 interface Currency {
   symbol: string;
   name: string;
@@ -16,14 +17,14 @@ const App: React.FC = () => {
   // const [loading, setLoading] = useState(false);
   const [baseCurrency, setBaseCurrency] = useState('EUR');
   const [targetCurrency, setTargetCurrency] = useState('USD');
-  const serverUrl = 'http://localhost:3000'; // Replace with your server's URL
+  const serverUrl = NODEJS_SERVER_URL|| 'http://localhost:3000'; // Replace with your server's URL
   const [currencies, setCurrencies] = useState<Currency[] | []>([]);
   const [convertedAmount, setConvertedAmount] = useState(0);
   const [AmountBaseCurrency, setAmountBaseCurrency] = useState(1);
   
   //USEEFFECT FOR FETCHING THE LIST OF CURRENCIES
   useEffect(() => {
-    const serverUrl = 'http://localhost:3000'; // Replace with your server's URL
+    const serverUrl = 'http://localhost:3000'; // Use environment variable or fallback to localhost
     fetch(`${serverUrl}/api/currencies`)
     .then(response => {
         console.log('Response received:', response);
@@ -38,19 +39,6 @@ const App: React.FC = () => {
 
   //function for requesting the conversion
   const convertCurrency = async () => {
-     
-  //   fetch(`${serverUrl}/api/data?base_currency=${baseCurrency}&target_currency=${targetCurrency}`)
-  //   .then(response => {
-  //     console.log('Response received:', response);
-  //     return response.json();
-  //   })
-  //   .then(data => {
-  //     console.log('Data parsed:', data);
-  //     setconver(data);
-  //   })
-  //   .catch(error => console.error('Error fetching data:', error))
-  // }
-
     fetch(`${serverUrl}/api/data?base_currency=${baseCurrency}&target_currency=${targetCurrency}`)
     .then(response => {
       console.log('Response received:', response);
