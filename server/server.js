@@ -8,13 +8,6 @@ const { Pool } = pkg;
 
 dotenv.config();
 const app = express();
-// Define allowed origins
-const allowedOrigins = [
-    'http://localhost:5173',  // Vite's default development port
-    'http://localhost:3000',
-    // Add your client's production URL here
-    'https://https://currency-exchange-client-80m4umc7e-hashirsohail1999s-projects.vercel.app/'
-  ];
 const port = process.env.PORT || 3000;
 // Create a new Pool instance to connect to the database
 const pool = new Pool({
@@ -22,21 +15,7 @@ const pool = new Pool({
     ssl: { rejectUnauthorized: false }, // Required for Neon
   });
 // Enable CORS for all routes
-// Configure CORS
-app.use(cors({
-    origin: function(origin, callback) {
-      // Allow requests with no origin (like mobile apps or curl requests)
-      if (!origin) return callback(null, true);
-      
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-        return callback(new Error(msg), false);
-      }
-      return callback(null, true);
-    },
-    methods: ['GET', 'POST', 'OPTIONS'],
-    credentials: true
-  }));
+app.use(cors());
 app.use(express.json());
 
 // Access your API keys using process.env
