@@ -8,6 +8,13 @@ const { Pool } = pkg;
 
 dotenv.config();
 const app = express();
+// Define allowed origins
+const allowedOrigins = [
+    'http://localhost:5173',  // Vite's default development port
+    'http://localhost:3000',
+    // Add your client's production URL here
+    'https://https://currency-exchange-client-80m4umc7e-hashirsohail1999s-projects.vercel.app/'
+  ];
 const port = process.env.PORT || 3000;
 // Create a new Pool instance to connect to the database
 const pool = new Pool({
@@ -15,18 +22,30 @@ const pool = new Pool({
     ssl: { rejectUnauthorized: false }, // Required for Neon
   });
 // Enable CORS for all routes
-app.use(cors());
+// Configure CORS
+app.use(cors({
+    origin: function(origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
+    methods: ['GET', 'POST', 'OPTIONS'],
+    credentials: true
+  }));
 app.use(express.json());
 
 // Access your API keys using process.env
 const apiKey = process.env.FREECURRENCYAPI_KEY;
 const freecurrencyapi = new Freecurrencyapi(apiKey);
-
 //Homepage nothing to see here
 app.get('/', (req, res) => {
     res.send(`${"hello"}`);
 });
-
 app.get('/api/currencies', (req, res) => {
     console.log(`request recieved for currency list`)
      freecurrencyapi.currencies().then(response => {
@@ -46,7 +65,6 @@ app.get('/api/data', (req, res) => {
             res.send(response);
         });
   });
-
  // API Route to fetch logs
 app.get('/api/logs', async (req, res) => {
     try {
