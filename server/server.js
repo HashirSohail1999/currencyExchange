@@ -1,8 +1,10 @@
 import Freecurrencyapi from '@everapi/freecurrencyapi-js';
 import express from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import pkg from 'pg';
 const { Pool } = pkg;
+
 
 dotenv.config();
 const app = express();
@@ -12,7 +14,14 @@ const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: { rejectUnauthorized: false }, // Required for Neon
   });
-// Remove CORS middleware
+// Enable CORS for all routes
+app.use(cors({
+    origin: [
+        'https://currency-exchange-client-gamma.vercel.app'
+    ],
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type'],
+}));
 app.use(express.json());
 
 // Access your API keys using process.env
