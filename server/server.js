@@ -16,11 +16,12 @@ const pool = new Pool({
   });
 // Enable CORS for all routes
 app.use(cors({
-    origin: [
-        'https://currency-exchange-client-gamma.vercel.app',
-        'http://localhost:3000',
-        'http://localhost:5173',
-    ],
+    origin: "*"
+        // 'https://currency-exchange-client-gamma.vercel.app',
+        // vercel.app
+        // 'http://localhost:3000',
+        // 'http://localhost:5173',
+    ,
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
 }));
