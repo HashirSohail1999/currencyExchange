@@ -31,15 +31,20 @@ const App: React.FC = () => {
   const [convertedAmount, setConvertedAmount] = useState(0);
   const [AmountBaseCurrency, setAmountBaseCurrency] = useState(1);
   
+  
   //Function for fetching the logs
   const fetchLogs = async () => {
-    // console.log('Fetching logs');
-    const response = await fetch('http://localhost:3000/api/logs');
-    const data = await response.json();
-    // console.log("logs "+ JSON.stringify(data, null, 2));
-    setlogs(data);
+    try {
+      // console.log('Fetching logs');
+      const response = await fetch(`${serverUrl}/api/logs`);
+      const data = await response.json();
+      // console.log("logs "+ JSON.stringify(data, null, 2));
+      setlogs(data);
+    } catch (error) {
+      console.error('Error fetching logs:', error);
+    }
   };
-
+  
   //function for requesting the conversion
   const convertCurrency = async () => {
     fetch(`${serverUrl}/api/data?base_currency=${baseCurrency}&target_currency=${targetCurrency}`)
@@ -65,7 +70,7 @@ const App: React.FC = () => {
 
   //Function for pushing the logs
   const writeLog = async (requestContent: string, responseContent: string): Promise<void> => {
-    const result = await fetch('http://localhost:3000/api/logs', {
+    const result = await fetch(`${serverUrl}/api/logs`, {
       method: 'POST', // HTTP POST method
       headers: { 'Content-Type': 'application/json' }, // Tell the server it's JSON
       body: JSON.stringify({
@@ -80,18 +85,18 @@ const App: React.FC = () => {
 
   //USEEFFECT FOR FETCHING THE LIST OF CURRENCIES AND LOGS
   useEffect(() => {
-    // Fetch the list of currencies
+    const serverUrl = NODEJS_SERVER_URL|| 'http://localhost:3000'; // Use environment variable or fallback to localhost
     fetch(`${serverUrl}/api/currencies`)
     .then(response => {
-        // console.log('Response received:', response);
+        console.log('Response received:', response);
         return response.json();
       })
     .then(data => {
-      // console.log('Currencies:', data)
+      console.log('Currencies:', data)
       const currencyArray = Object.values(data.data) as Currency[];
       setCurrencies(currencyArray);
     });
-    fetchLogs();
+    fetchLogs()
   }, [])
   
     return (
